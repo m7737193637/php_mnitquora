@@ -7,7 +7,7 @@
   {
     $usrname=$_POST["email"];
     $psw=$_POST["password"];
-    $sql="SELECT password FROM data WHERE data.name = '$usrname' ";
+    $sql="SELECT password FROM accounts WHERE accounts.username = '$usrname' ";
     $qstat = mysqli_query($connection, $sql);
     if(!$qstat)
     {
@@ -126,15 +126,15 @@ echo "<script>$('#myModal').modal('show')</script>";*/
           <form role="form" action="welcome2.php" method="post">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-              <input type="text" class="form-control" id="usrname" placeholder="Enter email" name="email" required>
+              <input type="text" class="form-control" id="usrname" placeholder="Enter Username" name="username" required>
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
               <input type="password" class="form-control" id="psw" placeholder="Enter password" name="password" required>
             </div>
 <div class="form-group">
-              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Confirm Password</label>
-              <input type="password" class="form-control" id="psw" placeholder="Confirm password" name="password" required>
+              <label for="psw"><span class="glyphicon glyphicon-pencil"></span> E-mail</label>
+              <input type="text" class="form-control" id="psw" placeholder="Enter E-mail Id" name="email" required>
             </div>
 
             <!-- 
