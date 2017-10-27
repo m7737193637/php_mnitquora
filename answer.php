@@ -4,7 +4,8 @@
 	{
 		$yourans=$_POST["yourans"];
 		$qid=$_POST["qid"];
-		$sql= "INSERT INTO answers (qid, acont) VALUES ('$qid', '$yourans')";
+		$userid=$_POST["userid"];
+		$sql= "INSERT INTO answers (qid, acont , userid) VALUES ('$qid', '$yourans' , '$userid')";
 		$qstat =mysqli_query($connection, $sql);
 		if(!$qstat)
 		{

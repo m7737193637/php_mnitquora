@@ -14,7 +14,8 @@
   {
     $qcont=$_POST["qcont"];
     $category=$_POST["category"];
-    $sql= "INSERT INTO questions (qcont, category) VALUES ('$qcont', '$category' )";
+    $userid=$_POST["userid"];
+    $sql= "INSERT INTO questions (qcont, category, userid) VALUES ('$qcont', '$category' , '$userid' )";
     $qstat =mysqli_query($connection, $sql);
     if(!$qstat)
     {
@@ -83,12 +84,8 @@ a:hover, a:active {
 </head>
 
 <body>
-<header class="container-fluid text-center" style="background-color: #d9534f;">
-  <h1 style="text-align: center;">Welcome <?php echo $_SESSION["username"]; ?></h1>
-<!--   <p>Resize this responsive page to see the effect!</p> 
- --></header>
 
- <div class= "form-group" >
+<!--  <div class= "form-group" >
       <form role="form" action="<?php echo($_SERVER['PHP_SELF']); ?>" method="post">
          <div class="form-group">
               <label for="qcont"><span class="glyphicon glyphicon-pencil"></span> Ask a Question</label>
@@ -102,7 +99,11 @@ a:hover, a:active {
               <label for="ask"><span class="glyphicon glyphicon-eye-open"></span>Ask</label>
               <input type="submit" class="form-control" type="button" id="ask" name="ask" >
             </div>
-           
+
+            <div class="form-group">
+              <input type="hidden" class="form-control"  name="userid" value=<?php echo $_SESSION["userid"] ?> >
+            </div>
+            
 
 </form>
 </div>
@@ -123,17 +124,16 @@ a:hover, a:active {
 
   
 </div>
-
+ -->
 <center>
  <a href="http://localhost:8080/new/logout1.php">logout</a>
 </center>
 
 
-
+<!-- 
 <div class="modal fade" id="ansmodal" role="dialog">
     <div class="modal-dialog">
     
-      <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header" style="padding:35px 50px;">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -154,19 +154,23 @@ a:hover, a:active {
           </div>
               <input type="hidden" name="qid" value=  "<?php echo $qid ?>" >
               <input type="submit" class="form-control" type="button" id="answer" name="answer" >
+ <div class="form-group">
+              <input type="hidden" class="form-control"  name="userid" value=<?php echo $_SESSION["userid"] ?> >
+            </div>
+           
 
           </form>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"> Cancel</button>
-     <!--      <p>Not a member? <a href="#">Sign Up</a></p>
+     <!      <p>Not a member? <a href="#">Sign Up</a></p>
           <p>Forgot <a href="#">Password?</a></p>
-      -->   </div>
+      --><!--    </div>
       </div>
       
     </div>
   </div> 
- 
+  --> 
 <script>
 $(document).ready(function(){
     $("#answer").click(function(){

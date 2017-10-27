@@ -15,8 +15,8 @@
 		else
 		{
 			session_start();	
-			$_SESSION['username'] = $usrname;
-			header("Location: welcome.php");
+			$_SESSION['username'] = $usrname;	
+			header("Location: login1.php");
 			exit();
 		}
 	}

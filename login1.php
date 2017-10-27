@@ -7,7 +7,7 @@
   {
     $usrname=$_POST["email"];
     $psw=$_POST["password"];
-    $sql="SELECT password FROM accounts WHERE accounts.username = '$usrname' ";
+    $sql="SELECT userid, password FROM accounts WHERE accounts.username = '$usrname' ";
     $qstat = mysqli_query($connection, $sql);
     if(!$qstat)
     {
@@ -22,7 +22,8 @@
           {
             session_start();
             $_SESSION['username'] = $usrname;
-            header("location: welcome.php");
+            $_SESSION['userid']=$pass['userid'];
+            header("location: main.php");
             exit();
           }
         else
