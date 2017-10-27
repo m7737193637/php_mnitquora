@@ -9,13 +9,19 @@
   {
     $qid=$_GET["qid"];
   }
-
-  if(!empty($_POST))
-  {
     $data=[];
     $i=0;
-    $cat= $_POST['category'];
-    $sql= "select qid, qcont from questions where questions.category = '$cat' ";
+    $cat="All Questions";
+  
+
+  if(!empty($_POST) && isset($_POST["category"]) )
+  {
+    $cat=$_POST["category"];
+    $sql= "select qid, qcont, category from questions where questions.category = '$cat' ";   
+  }
+ else
+   { $sql= "select qid, qcont, category from questions ";
+}
     $qstat =mysqli_query($connection, $sql);
     if(!$qstat)
     {
@@ -34,8 +40,6 @@
           }
       } }
 
-  }
-
 /*
   $data=[];
   $i=0;
@@ -52,6 +56,12 @@ $qstat2 =mysqli_query($connection, $sql2);
           }
       }
     */
+
+
+
+
+
+
 $category=[];
 $j=0;
 $sql3="SELECT distinct  category from questions";
@@ -139,7 +149,6 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
 </head>
 
 <body>
-<?php $cat="unaswered"; ?>
 
 
 <header class="container-fluid text-center" style="background-color: #002147;color: #ffffff">
@@ -206,15 +215,14 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
       <div class="panel panel-primary">
         <div class="panel-heading" ><?php echo $cat; ?></div>
         <div class="panel-body">
-          <?php if($cat!="unaswered"){?>
         <?php foreach ($data as $row) 
         {?>
           <div>
-      <?php echo $row["qcont"]  ?>
+      <?php echo $row["qcont"]  ?><br>
+      <?php echo $row["category"]  ?><br>
       <a href="<?php echo "main.php?qid=" . $row["qid"]; ?>"><button class=" btn btn-primary" id="answer ">Answer</button></a>
      </div>
      <?php }?>
-<?php } ?>
 
 
         </div>

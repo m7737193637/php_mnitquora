@@ -16,7 +16,7 @@
     $category=$_POST["category"];
     $userid=$_POST["userid"];
     $sql= "INSERT INTO questions (qcont, category, userid) VALUES ('$qcont', '$category' , '$userid' )";
-    $qstat =mysqli_query($connection, $sql);
+    $qstat =mysqli_query($connetion, $sql);
     if(!$qstat)
     {
             die(" nhi chali" . mysqli_error($connection));
@@ -85,7 +85,7 @@ a:hover, a:active {
 
 <body>
 
-<!--  <div class= "form-group" >
+  <div class= "form-group" >
       <form role="form" action="<?php echo($_SERVER['PHP_SELF']); ?>" method="post">
          <div class="form-group">
               <label for="qcont"><span class="glyphicon glyphicon-pencil"></span> Ask a Question</label>
