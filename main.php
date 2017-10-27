@@ -139,7 +139,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
 </head>
 
 <body>
-
+<?php $cat="unaswered"; ?>
 
 
 <header class="container-fluid text-center" style="background-color: #002147;color: #ffffff">
@@ -206,6 +206,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
       <div class="panel panel-primary">
         <div class="panel-heading" ><?php echo $cat; ?></div>
         <div class="panel-body">
+          <?php if($cat!="unaswered"){?>
         <?php foreach ($data as $row) 
         {?>
           <div>
@@ -213,6 +214,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
       <a href="<?php echo "main.php?qid=" . $row["qid"]; ?>"><button class=" btn btn-primary" id="answer ">Answer</button></a>
      </div>
      <?php }?>
+<?php } ?>
 
 
         </div>
