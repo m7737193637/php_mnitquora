@@ -262,7 +262,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
       <form role="form" action="question.php" method="post">
          <div class="form-group">
               <label for="qcont"><span class="glyphicon glyphicon-pencil"></span> Ask a Question</label>
-              <textarea class="form-control" id="qcont" placeholder="Enter your question" name="qcont" required></textarea>
+              <textarea rows=10 class="form-control" id="qcont" placeholder="Enter your question" name="qcont" required></textarea>
             </div>
              <div class="form-group">
               <label for="category"><span class="glyphicon glyphicon-eye-open"></span> Category</label>
