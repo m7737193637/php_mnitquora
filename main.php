@@ -170,7 +170,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
             <h3>categories</h3>
             <form action="<?php echo "main.php?unans=" . $unans ;?>" method="post">    
             <?php foreach ($category as $row1) {?>
-            <input type="radio" name="category" value= <?php echo $row1["category"] ?> <?php if($cat==$row1["category"]) echo "checked"; ?> > <?php echo $row1["category"] ?>
+            <input type="radio" name="category" class=".selectUrl" value= <?php echo $row1["category"] ?> <?php if($cat==$row1["category"]) echo "checked"; ?> > <?php echo $row1["category"] ?>
             <br>
             <?php }?>
             <input  type="submit"  >
@@ -303,6 +303,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
   {
     $("#quesmodal").modal();
   }
+
 </script>
 </body>
 
