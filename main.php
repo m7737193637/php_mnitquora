@@ -4,24 +4,50 @@
   session_start();
   if (!isset($_SESSION['username']) || empty($_SESSION['username'])) 
     header("Location: login1.php");
-     
+   
+
+    $data=[];
+    $makeactive="home";
+    $i=0;
+    $catdisp="All Questions";
+    $cat="All";
+    $unans=false; 
+
   if(!empty($_GET))
   {
-    $qid=$_GET["qid"];
+    $unans=$_GET["unans"];
   }
-    $data=[];
-    $i=0;
-    $cat="All Questions";
-  
 
   if(!empty($_POST) && isset($_POST["category"]) )
   {
     $cat=$_POST["category"];
+    
+    if($unans==false)
+    {
+      $makeactive="home";  
+      $catdisp=$cat;
     $sql= "select qid, qcont, category from questions where questions.category = '$cat' ";   
+    }
+    else
+    {
+      $makeactive="answer";
+      $catdisp="Unanswered in " . $_POST["category"] ;
+      $sql= "select qid, qcont, category from questions where questions.category = '$cat' AND noans=0";   
+    }
+  }
+  else if($unans==true)
+  {
+    $makeactive="answer";
+        $catdisp="All Unanswered";    
+        $sql= "select qid, qcont, category from questions where  noans=0";       
   }
  else
-   { $sql= "select qid, qcont, category from questions ";
-}
+   {
+   $makeactive="home";   
+    $catdisp="All Questions";
+    $sql= "select qid, qcont, category from questions ";
+   }
+
     $qstat =mysqli_query($connection, $sql);
     if(!$qstat)
     {
@@ -173,9 +199,9 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span>Home</a></li>
-        <li><a href="javascript:answer();"><span class="glyphicon glyphicon-pencil"></span>Answer</a></li>
-        <li><a href="javascript:question();">Ask Question</a></li>
+        <li class="<?php if($makeactive=="home") echo "active" ?>"><a href="<?php echo "main.php"  ?>"><span class="glyphicon glyphicon-home"></span>Home</a></li>
+        <li class="<?php if($makeactive=="answer") echo "active" ?>"><a href="<?php echo "main.php?unans=true"  ?>"><span class="glyphicon glyphicon-pencil"></span>Answer</a></li>
+        <li class="<?php if($makeactive=="ask") echo "active" ?>"><a href="javascript:question();">Ask Question</a></li>
         <li><a href="https://www.google.com"><span class="glyphicon glyphicon-earphone"></span>Contact Us</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -197,7 +223,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
         <div class="panel-heading " >Categories</div>
         <div class="panel-body">
             <h3>categories</h3>
-            <form action="<?php echo($_SERVER['PHP_SELF']); ?>" method="post">    
+            <form action="<?php echo "main.php?unans=" . $unans ;?>" method="post">    
             <?php foreach ($category as $row1) {?>
             <input type="radio" name="category" value= <?php echo $row1["category"] ?> <?php if($cat==$row1["category"]) echo "checked"; ?> > <?php echo $row1["category"] ?>
             <br>
@@ -213,7 +239,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
  
     <div class="col-sm-9"> 
       <div class="panel panel-primary">
-        <div class="panel-heading" ><?php echo $cat; ?></div>
+        <div class="panel-heading" ><?php echo $catdisp; ?></div>
         <div class="panel-body">
         <?php foreach ($data as $row) 
         {?>
