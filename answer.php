@@ -23,7 +23,7 @@
 		}
 		else
 		{
-			header("Location: welcome.php");
+			header("Location: main.php");
 			exit();
 		}
 	}

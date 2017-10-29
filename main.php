@@ -15,7 +15,12 @@
 
   if(!empty($_GET))
   {
+    if(isset($_GET["unans"]))
     $unans=$_GET["unans"];
+    if(isset($_GET["qid"]))
+   {
+    $qid=$_GET["qid"];
+    }
   }
 
   if(!empty($_POST) && isset($_POST["category"]) )
@@ -26,26 +31,26 @@
     {
       $makeactive="home";  
       $catdisp=$cat;
-    $sql= "select qid, qcont, category from questions where questions.category = '$cat' ";   
+    $sql= "select qid, qcont, category, noans from questions where questions.category = '$cat' order by noans desc" ;   
     }
     else
     {
       $makeactive="answer";
       $catdisp="Unanswered in " . $_POST["category"] ;
-      $sql= "select qid, qcont, category from questions where questions.category = '$cat' AND noans=0";   
+      $sql= "select qid, qcont, category, noans from questions where questions.category = '$cat' AND noans=0";   
     }
   }
   else if($unans==true)
   {
     $makeactive="answer";
         $catdisp="All Unanswered";    
-        $sql= "select qid, qcont, category from questions where  noans=0";       
+        $sql= "select qid, qcont, category, noans from questions where  noans=0";       
   }
  else
    {
    $makeactive="home";   
     $catdisp="All Questions";
-    $sql= "select qid, qcont, category from questions ";
+    $sql= "select qid, qcont, category, noans from questions order  by noans desc";
    }
 
     $qstat =mysqli_query($connection, $sql);
@@ -111,68 +116,8 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-    /* Remove the navbar's default rounded borders and increase the bottom margin */ 
-    .navbar {
-      margin-bottom: 50px;
-      border-radius: 0;
-    }
-    
-    /* Remove the jumbotron's default bottom margin */ 
-     .jumbotron {
-      margin-bottom: 0;
-  
-      
-    }
-   ul li{
-    display: inline;
-   }
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #002147;
-      padding: 25px;
-    }
-
- .navbar {
-      background-color: #002147;
-      z-index: 9999;
-      border: 0;
-      font-size: 12px !important;
-      line-height: 1.42857143 !important;
-      letter-spacing: 4px;
-      border-radius: 0;
-      font-family: Montserrat, sans-serif;
-  }
-  .navbar li a, .navbar .navbar-brand {
-      color: #fff !important;
-  }
-  .navbar-nav li a:hover, .navbar-nav li.active a {
-      color: #002147 !important;
-      background-color: #fff !important;
-  }
-  .navbar-default .navbar-toggle {
-      border-color: transparent;
-      color: #fff !important;
-  }
-
-  .modal-header,  .close {
-      background-color: #084386;
-      color:white !important;
-      text-align: center;
-      font-size: 30px; 
-
-  }
-  .modal-footer {
-      background-color: #f9f9f9;
-  }
-  .modal-dialog
-  {
-
-        margin-top: 10%;
-  }
-
-</style>
-</head>
+  <link rel="stylesheet" href="mystyle.css">
+  </head>
 
 <body>
 
@@ -244,9 +189,12 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
         <?php foreach ($data as $row) 
         {?>
           <div>
-      <?php echo $row["qcont"]  ?><br>
-      <?php echo $row["category"]  ?><br>
-      <a href="<?php echo "main.php?qid=" . $row["qid"]; ?>"><button class=" btn btn-primary" id="answer ">Answer</button></a>
+     <h4><a href="<?php echo "qview.php?qid=" . $row["qid"]; ?>" ><?php echo $row["qcont"]  ?></a></h4>
+  <h4><font color="#084386" >Category:</font> <?php echo $row["category"] ?></h4>
+  <h4><font color="#084386" >Answers:</font> <?php echo $row["noans"] ?></h4>
+  
+              <a href="<?php echo "main.php?qid=" . $row["qid"]; ?>"><button class=" btn btn-primary" id="answer ">Answer</button></a>
+  
      </div>
      <?php }?>
 
@@ -260,7 +208,15 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
 
 <div class="modal fade" id="ansmodal" role="dialog">
     <div class="modal-dialog">
-    
+    <?php          
+    if(isset($_GET["qid"]))
+    {?>
+     <script >
+              $("#ansmodal").modal();       
+     </script>
+    <?php } ?>
+     
+
       <div class="modal-content">
         <div class="modal-header" >
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -318,7 +274,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
             </div>
 
             <div class="form-group">
-              <input type="text" class="form-control"  name="userid" value=<?php echo $_SESSION["userid"] ?> >
+              <input type="hidden" class="form-control"  name="userid" value=<?php echo $_SESSION["userid"] ?> >
             </div>
             
 
