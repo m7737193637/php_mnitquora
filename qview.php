@@ -9,7 +9,8 @@
  	$qid=$_GET["qid"];
  	if(isset($_GET["aidindex"]))
  	$aidindex=$_GET["aidindex"];
- 	$sql="select q.qid, a.username, q.qcont, q.category from questions as q inner join accounts as a on q.userid=a.userid where qid= '$qid' ";
+
+ 	$sql="select q.qid, a.username, q.qcont, q.category, q.userid from questions as q inner join accounts as a on q.userid=a.userid where qid= '$qid' ";
  	$qstat=mysqli_query($connection, $sql);
 
 	if($qstat && mysqli_num_rows($qstat)>0)
@@ -107,7 +108,7 @@
           <form role="form" action="editanswer.php" method="post">
             <div class="form-group">
               
-              <textarea rows="15" class="form-control" id="yourans"  name="yourans" ><?php echo $anss[$aidindex]["acont"] ;?></textarea>
+              <textarea rows="15" class="form-control" id="yourans"  name="yourans" required><?php echo $anss[$aidindex]["acont"] ;?></textarea>
           </div>
               <input type="hidden" name="qid" value=  "<?php echo $qid ?>" >
               <input type="submit" class="form-control" type="button" id="answer" name="answer" >
@@ -125,6 +126,87 @@
     </div>
 
 
+<div class="modal fade" id="quesmodal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header" >
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-pencil"></span> Ask a question</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+      
+      
+  <div class= "form-group" >
+      <form role="form" action="question.php" method="post">
+         <div class="form-group">
+              <label for="qcont"><span class="glyphicon glyphicon-pencil"></span> Ask a Question</label>
+              <textarea rows=10 class="form-control" id="qcont" placeholder="Enter your question" name="qcont" required></textarea>
+            </div>
+             <div class="form-group">
+              <label for="category"><span class="glyphicon glyphicon-eye-open"></span> Category</label>
+              <input type="text" class="form-control" id="category" placeholder="Enter category" name="category" required>
+            </div>
+             <div class="form-group">
+              <label for="ask"><span class="glyphicon glyphicon-eye-open"></span>Ask</label>
+              <input type="submit" class="form-control" type="button" id="ask" name="ask" >
+            </div>
+
+            <div class="form-group">
+              <input type="hidden" class="form-control"  name="userid" value=<?php echo $_SESSION["userid"] ?> >
+            </div>
+            
+
+</form>
+</div>
+    </div>
+  </div>
+</div>
+</div> 
+ 
+
+
+
+<div class="modal fade" id="editquesmodal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header" >
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-pencil"></span> Edit question</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+      
+      
+  <div class= "form-group" >
+      <form role="form" action="editquestion.php" method="post">
+         <div class="form-group">
+              <label for="qcont"><span class="glyphicon glyphicon-pencil"></span> Question</label>
+              <textarea rows=10 class="form-control" id="qcont" name="qcont" required><?php echo $que["qcont"] ;?> </textarea>
+            </div>
+             <div class="form-group">
+              <label for="category"><span class="glyphicon glyphicon-eye-open"></span> Category</label>
+              <input type="text" class="form-control" id="category" value="<?php echo $que["category"] ?>" name="category" required>
+            </div>
+             <div class="form-group">
+              <label for="ask"><span class="glyphicon glyphicon-eye-open"></span>Edit</label>
+              <input type="submit" class="form-control" type="button" id="ask" name="ask" >
+            </div>
+
+        	 <div class="form-group">
+              <input type="hidden" class="form-control"  name="qid" value=<?php echo $qid?> >
+            </div>
+                       
+
+</form>
+</div>
+    </div>
+  </div>
+</div>
+</div> 
+
+
+
 
 <div class="container-fluid "  >    
   <div class="row">
@@ -134,7 +216,9 @@
          <div class="panel-body">
         	<h4><font color="#084386" >Category:</font><?php echo $que["category"] ?></h4>
         	<h4><font color="#084386" >Asked By:</font> <?php echo $que["username"] ?></h4>
-        	
+        	<?php if($_SESSION['userid']==$que["userid"]) { ?> 
+        	       <h4><a href="javascript:editquestion()" ?>Edit</a></h4>
+        	       <?php } ?>
         </div>
         
   </div>
@@ -168,6 +252,14 @@
 <footer class="container-fluid text-center">
   <h4><font color="#ffffff    ">This Website is made by <font style="font-weight: bold">Manish Bhagwani</font> and <font style="font-weight: bold">Pulkit Garg</font></font></h4>  
 </footer>
-
+<script >  function question()
+  {
+    $("#quesmodal").modal();
+  }
+  function editquestion()
+  {
+    $("#editquesmodal").modal();
+  }
+</script>
 </body>
 </html>
