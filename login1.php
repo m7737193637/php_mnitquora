@@ -124,19 +124,20 @@ echo "<script>$('#myModal').modal('show')</script>";*/
           <h4><span class="glyphicon glyphicon-registration-mark"></span> SignUp</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-          <form role="form" action="welcome2.php" method="post">
+          <form role="form" action="welcome2.php" method="post" onsubmit="return myfunction()">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-              <input type="text" class="form-control" id="usrname" placeholder="Enter Username" name="username" >
-              
+              <input type="text" class="form-control" id="usrname" placeholder="Enter Username" name="username" required>
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
               <input type="password" class="form-control" id="psw" placeholder="Enter password" name="password" required>
+              <p id="demo1"></p>
             </div>
 <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-pencil"></span> E-mail</label>
-              <input type="text" class="form-control" id="psw" placeholder="Enter E-mail Id" name="email" required>
+              <input type="text" class="form-control" id="email" placeholder="Enter E-mail Id" name="email" required>
+               <p id="demo2"></p>
             </div>
 
             <!-- 
@@ -144,7 +145,7 @@ echo "<script>$('#myModal').modal('show')</script>";*/
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Confirm Password</label>
               <input type="password" class="form-control" id="psw" placeholder="Enter password" name="password">
             </div> -->
-              <button type="submit" class="btn btn-danger btn-block" onclick="myfunction()"><span class="glyphicon glyphicon-off"></span> SignUp</button>
+              <button type="submit" class="btn btn-danger btn-block" ><span class="glyphicon glyphicon-off"></span> SignUp</button>
           </form>
         </div>
         <div class="modal-footer">
@@ -171,12 +172,22 @@ $(document).ready(function(){
 });
 function myfunction()
 {
-  var x=document.getElementById("usrname").value;
-  if(x=="")
+ var y=document.getElementById("email").value;
+
+ var x=document.getElementById("psw").value.length;
+  if(!validateEmail(y))
   {
-alert("nhi chala");
- }
+   document.getElementById("demo2").innerHTML="Email is not valid";
+   
+   return false; 
+  }
+ return true;
 }
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+  
 </script>
 
 </body>
