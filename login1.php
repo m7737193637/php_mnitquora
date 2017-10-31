@@ -127,7 +127,8 @@ echo "<script>$('#myModal').modal('show')</script>";*/
           <form role="form" action="welcome2.php" method="post">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-              <input type="text" class="form-control" id="usrname" placeholder="Enter Username" name="username" required>
+              <input type="text" class="form-control" id="usrname" placeholder="Enter Username" name="username" >
+              
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
@@ -143,7 +144,7 @@ echo "<script>$('#myModal').modal('show')</script>";*/
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Confirm Password</label>
               <input type="password" class="form-control" id="psw" placeholder="Enter password" name="password">
             </div> -->
-              <button type="submit" class="btn btn-danger btn-block"><span class="glyphicon glyphicon-off"></span> SignUp</button>
+              <button type="submit" class="btn btn-danger btn-block" onclick="myfunction()"><span class="glyphicon glyphicon-off"></span> SignUp</button>
           </form>
         </div>
         <div class="modal-footer">
@@ -155,7 +156,7 @@ echo "<script>$('#myModal').modal('show')</script>";*/
       
     </div>
   </div> 
- 
+ <p id="demo"></p>
 <script>
 $(document).ready(function(){
     $("#myBtn").click(function(){
@@ -168,6 +169,14 @@ $(document).ready(function(){
         $("#myModal2").modal();
     });
 });
+function myfunction()
+{
+  var x=document.getElementById("usrname").value;
+  if(x=="")
+  {
+alert("nhi chala");
+ }
+}
 </script>
 
 </body>
