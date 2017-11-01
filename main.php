@@ -31,13 +31,24 @@
     {
       $makeactive="home";  
       $catdisp=$cat;
+      if($cat!="All")
     $sql= "select qid, qcont, category, noans from questions where questions.category = '$cat' order by noans desc" ;   
+    else
+    {
+      $catdisp="All Questions";
+    $sql= "select qid, qcont, category, noans from questions order by noans desc" ;   
+    }
     }
     else
     {
       $makeactive="answer";
       $catdisp="Unanswered in " . $_POST["category"] ;
+      if($cat!="All")
       $sql= "select qid, qcont, category, noans from questions where questions.category = '$cat' AND noans=0";   
+      else
+        {$catdisp="All Unanswered";
+      $sql= "select qid, qcont, category, noans from questions where noans=0";           
+    }
     }
   }
   else if($unans==true)
@@ -117,6 +128,14 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="mystyle.css">
+  <script>
+function autoSubmit()
+{
+    var formObject = document.forms['category'];
+    formObject.submit();
+}
+</script>
+
   </head>
 
 <body>
@@ -167,13 +186,14 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
         
         <div class="panel-heading " >Categories</div>
         <div class="panel-body">
-            <h3>categories</h3>
-            <form action="<?php echo "main.php?unans=" . $unans ;?>" method="post">    
+            <form action="<?php echo "main.php?unans=" . $unans ;?>" method="post" id="category">    
+            <input type="radio" name="category"  id="All" value= "All" onChange="autoSubmit();" <?php if($cat=="All") echo "checked"; ?>> <label for ="All">All</label> 
+            <br>
+           
             <?php foreach ($category as $row1) {?>
-            <input type="radio" name="category"  value= <?php echo $row1["category"] ?> <?php if($cat==$row1["category"]) echo "checked"; ?> > <?php echo $row1["category"] ?>
+            <input type="radio" name="category"  id=<?php echo $row1["category"] ?> value= <?php echo $row1["category"] ?> onChange="autoSubmit();" <?php if($cat==$row1["category"]) echo "checked"; ?>> <label for =<?php echo $row1["category"] ?>><?php echo $row1["category"] ?></label> 
             <br>
             <?php }?>
-            <input  type="submit"  >
             </form>
   
         </div>
@@ -183,24 +203,28 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
 
  
     <div class="col-sm-9"> 
-      <div class="panel panel-primary">
-        <div class="panel-heading" ><?php echo $catdisp; ?></div>
-        <div class="panel-body">
-        <?php foreach ($data as $row) 
+        <h3  style="color: blue;"><?php echo $catdisp; ?></h3> 
+      
+      <?php foreach ($data as $row) 
         {?>
+      <div class="panel panel-primary">
+        <div class="panel-heading" ><a href="<?php echo "qview.php?qid=" . $row["qid"]; ?>" style="color:black;" ><?php echo $row["qcont"]  ?></a></div>
+        <div class="panel-body">
+        
           <div>
-     <h4><a href="<?php echo "qview.php?qid=" . $row["qid"]; ?>" ><?php echo $row["qcont"]  ?></a></h4>
-  <h4><font color="#084386" >Category:</font> <?php echo $row["category"] ?></h4>
+<!--      <h4><a href="<?php echo "qview.php?qid=" . $row["qid"]; ?>" ><?php echo $row["qcont"]  ?></a></h4>
+ -->  <h4><font color="#084386" >Category:</font> <?php echo $row["category"] ?></h4>
   <h4><font color="#084386" >Answers:</font> <?php echo $row["noans"] ?></h4>
   
               <a href="<?php echo "main.php?qid=" . $row["qid"]; ?>"><button class=" btn btn-primary" id="answer ">Answer</button></a>
   
      </div>
-     <?php }?>
 
 
         </div>
       </div>
+
+     <?php }?>
     </div>
    </div>
 </div>
