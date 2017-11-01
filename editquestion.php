@@ -4,8 +4,11 @@
 	{
 		$question=$_POST["qcont"];
 		$qid=$_POST["qid"];
-	    $category=$_POST["category"];
-		$sql= "update questions set qcont= '$question', category= '$category' where qid= '$qid' ";
+		if($_POST["editcat"]=="Other")
+    $category=$_POST["othcat"];
+    else
+      $category=$_POST["editcat"];
+    $sql= "update questions set qcont= '$question', category= '$category' where qid= '$qid' ";
 		$qstat =mysqli_query($connection, $sql);
 		if(!$qstat)
 		{

@@ -31,10 +31,20 @@
             $i++;
           }
       }
-      
-
-
  }
+$category=[];
+$j=0;
+$sql3="SELECT distinct  category from questions";
+$qstat3=mysqli_query($connection, $sql3);
+
+if($qstat3 && mysqli_num_rows($qstat3)>0)
+{
+  while($row1=mysqli_fetch_assoc($qstat3))
+  {
+    $category[$j]=$row1;
+    $j++;
+  }
+}
 
 ?>
 
@@ -45,6 +55,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="mystyle.css">
+    <script type="text/javascript" src="functions.js"></script>
+
   </head>
 
 <body>
@@ -136,16 +148,25 @@
         </div>
         <div class="modal-body" style="padding:40px 50px;">
       
-      
-  <div class= "form-group" >
+      <div class= "form-group" >
       <form role="form" action="question.php" method="post">
          <div class="form-group">
               <label for="qcont"><span class="glyphicon glyphicon-pencil"></span> Ask a Question</label>
               <textarea rows=10 class="form-control" id="qcont" placeholder="Enter your question" name="qcont" required></textarea>
             </div>
              <div class="form-group">
-              <label for="category"><span class="glyphicon glyphicon-eye-open"></span> Category</label>
-              <input type="text" class="form-control" id="category" placeholder="Enter category" name="category" required>
+              <label for="askcat"><span class="glyphicon glyphicon-eye-open"></span> Category</label>
+              <select class="form-control" name="askcat" id="askcat" required onChange="catchange();">
+                <option value="" selected disabled hidden>Select Category</option>
+                <?php 
+                  foreach ($category as $catform) {
+                    ?>
+                    <option value=<?php echo $catform["category"] ?>><?php echo $catform["category"] ?> </option>
+                  <?php }
+                ?>
+                <option value="Other">None of These</option>
+              </select><br>
+              <input type="text" class="form-control" name="othcat" id="othcat" style="display: none;">
             </div>
              <div class="form-group">
               <label for="ask"><span class="glyphicon glyphicon-eye-open"></span>Ask</label>
@@ -159,6 +180,7 @@
 
 </form>
 </div>
+  
     </div>
   </div>
 </div>
@@ -185,8 +207,18 @@
               <textarea rows=10 class="form-control" id="qcont" name="qcont" required><?php echo $que["qcont"] ;?> </textarea>
             </div>
              <div class="form-group">
-              <label for="category"><span class="glyphicon glyphicon-eye-open"></span> Category</label>
-              <input type="text" class="form-control" id="category" value="<?php echo $que["category"] ?>" name="category" required>
+              <label for="editcat"><span class="glyphicon glyphicon-eye-open"></span> Category</label>
+              <select class="form-control" name="editcat" id="editcat" required onChange="editcatchange();">
+                <?php 
+                  foreach ($category as $catform) {
+                    ?>
+                    <option value=<?php echo $catform["category"] ?> <?php if($catform["category"]==$que["category"]) echo "selected" ?> ><?php echo $catform["category"] ?> </option>
+                  <?php }
+                ?>
+                <option value="Other">None of These</option>
+              </select><br>
+              <input type="text" class="form-control" name="editothcat" id="editothcat" style="display: none;">
+            
             </div>
              <div class="form-group">
               <label for="ask"><span class="glyphicon glyphicon-eye-open"></span>Edit</label>

@@ -13,7 +13,10 @@
   if(!empty($_POST))
   {
     $qcont=$_POST["qcont"];
-    $category=$_POST["category"];
+    if($_POST["askcat"]=="Other")
+    $category=$_POST["othcat"];
+    else
+      $category=$_POST["askcat"];
     $userid=$_POST["userid"];
     $sql= "INSERT INTO questions (qcont, category, userid) VALUES ('$qcont', '$category' , '$userid' )";
     $qstat =mysqli_query($connection, $sql);

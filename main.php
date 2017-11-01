@@ -128,13 +128,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="mystyle.css">
-  <script>
-function autoSubmit()
-{
-    var formObject = document.forms['category'];
-    formObject.submit();
-}
-</script>
+  <script type="text/javascript" src="functions.js"></script>
 
   </head>
 
@@ -186,7 +180,7 @@ function autoSubmit()
         
         <div class="panel-heading " >Categories</div>
         <div class="panel-body">
-            <form action="<?php echo "main.php?unans=" . $unans ;?>" method="post" id="category">    
+            <form action="<?php echo "main.php?unans=" . $unans ;?>" method="post" id="catradio">    
             <input type="radio" name="category"  id="All" value= "All" onChange="autoSubmit();" <?php if($cat=="All") echo "checked"; ?>> <label for ="All">All</label> 
             <br>
            
@@ -289,8 +283,18 @@ function autoSubmit()
               <textarea rows=10 class="form-control" id="qcont" placeholder="Enter your question" name="qcont" required></textarea>
             </div>
              <div class="form-group">
-              <label for="category"><span class="glyphicon glyphicon-eye-open"></span> Category</label>
-              <input type="text" class="form-control" id="category" placeholder="Enter category" name="category" required>
+              <label for="askcat"><span class="glyphicon glyphicon-eye-open"></span> Category</label>
+              <select class="form-control" name="askcat" id="askcat" required onChange="catchange();">
+                <option value="" selected disabled hidden>Select Category</option>
+                <?php 
+                  foreach ($category as $catform) {
+                    ?>
+                    <option value=<?php echo $catform["category"] ?>><?php echo $catform["category"] ?> </option>
+                  <?php }
+                ?>
+                <option value="Other">None of These</option>
+              </select><br>
+              <input type="text" class="form-control" name="othcat" id="othcat" style="display: none;">
             </div>
              <div class="form-group">
               <label for="ask"><span class="glyphicon glyphicon-eye-open"></span>Ask</label>
