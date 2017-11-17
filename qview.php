@@ -3,7 +3,8 @@
 	 session_start();
   if (!isset($_SESSION['username']) || empty($_SESSION['username'])) 
     header("Location: login1.php");
- 
+ $user=$_SESSION["userid"];
+
  if(!empty($_GET["qid"]))
  {
  	$qid=$_GET["qid"];
@@ -27,8 +28,25 @@
       {
           while($ans=mysqli_fetch_assoc($qstat2))
           {
+            $id=$ans["aid"];
+ $vote= "SELECT votetype, voteid from votes where userid='$user' and aid= '$id' limit 1";
+ $qstatus=mysqli_query($connection, $vote);
+ if(!$qstatus)
+              die(" nhi chali" . mysqli_error($connection));
+
+ if($qstatus && mysqli_num_rows($qstatus)>0)
+ {
+  $qres=mysqli_fetch_assoc($qstatus);
+    $ans["vstat"]=$qres["votetype"];
+    $ans["voteid"]=$qres["voteid"];
+ }
+ else
+  $ans["vstat"]=0;
+
             $anss[$i]=$ans;
+            
             $i++;
+            
           }
       }
  }
@@ -271,6 +289,11 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
         	       <h4><a href="<?php echo "qview.php?qid=" . $qid .  "&aidindex=" . $j ?>" >Edit</a></h4>
         	       <?php } ?>
 
+          <?php if($ans["vstat"]==0) {?> 
+          <button class="btn btn-primary " onclick="vote(<?php echo $ans["aid"] ?>, 1, <?php echo $qid ?>);"><span class="glyphicon glyphicon-thumbs-up"></span>Upvote</button>
+            <button class="btn btn-primary " onclick="vote(<?php echo $ans["aid"] ?>, 2, <?php echo $qid ?>);"><span class="glyphicon glyphicon-thumbs-down"></span>Downvote</button>
+          <?php } else { ?>
+            <button class="btn btn-primary " onclick="cvote(<?php echo $ans["voteid"] ?>, <?php echo $ans["vstat"] ?>,<?php echo $ans["aid"] ?>, <?php echo $qid ?>  )"> <?php if($ans["vstat"]==1) { ?> Upvoted <?php  } else { ?> Downvoted <?php } } ?></button>
         </div>
         
   </div>
@@ -292,6 +315,15 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
   {
     $("#editquesmodal").modal();
   }
+  $(window).scroll(function() {
+  sessionStorage.scrollTop = $(this).scrollTop();
+});
+
+$(document).ready(function() {
+  if (sessionStorage.scrollTop != "undefined") {
+    $(window).scrollTop(sessionStorage.scrollTop);
+  }
+});
 </script>
 </body>
 </html>

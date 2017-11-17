@@ -12,13 +12,14 @@
 
   if(!empty($_POST))
   {
-    $qcont=$_POST["qcont"];
+    $qconts=$_POST["qcont"];
+    $qcont=str_replace("'", "''", "$qconts");
     if($_POST["askcat"]=="Other")
     $category=$_POST["othcat"];
     else
       $category=$_POST["askcat"];
     $userid=$_POST["userid"];
-    $sql= "INSERT INTO questions (qcont, category, userid) VALUES ('$qcont', '$category' , '$userid' )";
+    $sql= "INSERT INTO questions (qcont, category, userid) VALUES (' $qcont ', '$category' , '$userid' )";
     $qstat =mysqli_query($connection, $sql);
     if(!$qstat)
     {

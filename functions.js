@@ -22,3 +22,11 @@ function editcatchange()
     document.getElementById("editothcat").style.display="none";
       
 }
+function vote(aid,type,qid)
+{
+  window.location="vote.php?aid="+ aid + "&type=" + type + "&qid="+qid ;
+}
+function cvote(vid,type,aid,qid)
+{
+  window.location="cvote.php?aid="+ aid + "&type=" + type + "&qid="+qid + "&vid="+vid;  
+}
