@@ -129,7 +129,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="mystyle.css">
   <script type="text/javascript" src="functions.js"></script>
-
+  <title>MnitQuora</title>
   </head>
 
 <body>
@@ -318,7 +318,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
 
 
 <footer class="container-fluid text-center">
-  <h4><font color="#ffffff    ">This Website is made by <font style="font-weight: bold">Manish Bhagwani</font> and <font style="font-weight: bold">Pulkit Garg</font></font></h4>  
+  <h4><font color="#ffffff    ">This Website is developed by <font style="font-weight: bold">Manish Bhagwani</font> and <font style="font-weight: bold">Pulkit Garg</font></font></h4>  
 </footer>
 
 

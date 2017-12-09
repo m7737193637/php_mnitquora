@@ -1,13 +1,13 @@
 <?php
   include 'database.php';
-  $msgs=array("", "Wrong Password", "Username doesn't exist");
+  $msgs=array("", "Wrong Password", "Username doesn't exist", "Account not activated yet");
     $err=0;
     
   if(!empty($_POST))
   {
     $usrname=$_POST["email"];
     $psw=$_POST["password"];
-    $sql="SELECT userid, password FROM accounts WHERE accounts.username = '$usrname' ";
+    $sql="SELECT userid, password, active FROM accounts WHERE accounts.username = '$usrname' ";
     $qstat = mysqli_query($connection, $sql);
     if(!$qstat)
     {
@@ -20,11 +20,16 @@
         $pass=mysqli_fetch_assoc($qstat);
         if($pass['password']==$psw)
           {
+            if($pass["active"]==1)
+            {
             session_start();
             $_SESSION['username'] = $usrname;
             $_SESSION['userid']=$pass['userid'];
             header("location: main.php");
             exit();
+            }
+            else
+              $err=3;
           }
         else
           $err=1;
