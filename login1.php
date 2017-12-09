@@ -175,17 +175,31 @@ function myfunction()
  var y=document.getElementById("email").value;
 
  var x=document.getElementById("psw").value.length;
-  if(!validateEmail(y))
+  var p=validateEmail(y);
+  if(p==0)
   {
    document.getElementById("demo2").innerHTML="Email is not valid";
-   
+   return false; 
+  }
+else if(p==1)
+  {
+   document.getElementById("demo2").innerHTML="Access through College Id Only (@mnit.ac.in)";
    return false; 
   }
  return true;
 }
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
+    if(! re.test(email))
+      return 0;
+    else 
+    {
+      if(email.endsWith("@mnit.ac.in"))
+        return 2;
+      else
+        return 1;
+    }  
+
 }
   
 </script>
