@@ -16,8 +16,24 @@
 		}
 		else
 		{
-			session_start();	
-			$_SESSION['username'] = $usrname;	
+
+			    $sql="SELECT userid FROM accounts WHERE accounts.username = '$usrname' ";
+		 $qstat = mysqli_query($connection, $sql);
+    if(!$qstat)
+    {
+      die(" nhi chali" . mysqli_error($connection));
+    }
+    else
+    {
+        $pass=mysqli_fetch_assoc($qstat);
+            session_start();
+            $_SESSION["username"] = $usrname;
+            $_SESSION["userid"]=$pass['userid'];
+            header("location: main.php");
+            exit();
+    
+}
+
 
 /*
 			$to      = $email; // Send email to our user
