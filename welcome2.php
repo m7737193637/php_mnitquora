@@ -4,7 +4,7 @@
 	{
 		$usrname=$_POST["username"];
 		$psw=$_POST["password"];
-		$email=$_POST["email"];
+		$email=$_POST["email2"];
 		$check="select email from accounts where email= '$email' limit 1";
 		$qstatus=mysqli_query($connection, $check);
 		if(mysqli_num_rows($qstatus)>0)

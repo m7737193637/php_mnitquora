@@ -2,7 +2,7 @@
   include 'database.php';
   $msgs=array("", "Wrong Password", "This Email is not registered", "Account not activated yet");
     $err=0;
-    
+   $msgsu=""; 
     if(!empty($_GET))
     {
       $msgsu="This Email already registered";
@@ -153,8 +153,8 @@ echo "<script>$('#myModal').modal('show')</script>";*/
               <p id="demo1"></p>
             </div>
 <div class="form-group">
-              <label for="psw"><span class="glyphicon glyphicon-pencil"></span> E-mail</label>
-              <input type="text" class="form-control" id="email" placeholder="Enter E-mail Id" name="email" required>
+              <label for="email2"><span class="glyphicon glyphicon-pencil"></span> E-mail</label>
+              <input type="text" class="form-control" id="email2" placeholder="Enter E-mail Id" name="email2" required>
                <p id="demo2"></p>
             </div>
 
@@ -190,7 +190,7 @@ $(document).ready(function(){
 });
 function myfunction()
 {
- var y=document.getElementById("email").value;
+ var y=document.getElementById("email2").value;
 
  var x=document.getElementById("psw").value.length;
   var p=validateEmail(y);
@@ -204,11 +204,12 @@ else if(p==1)
    document.getElementById("demo2").innerHTML="Access through College Id Only (@mnit.ac.in)";
    return false; 
   }
+  else
  return true;
 }
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(! re.test(email))
+    if(!re.test(email))
       return 0;
     else 
     {
