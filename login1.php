@@ -1,13 +1,17 @@
 <?php
   include 'database.php';
-  $msgs=array("", "Wrong Password", "Username doesn't exist", "Account not activated yet");
+  $msgs=array("", "Wrong Password", "This Email is not registered", "Account not activated yet");
     $err=0;
     
+    if(!empty($_GET))
+    {
+      $msgsu="This Email already registered";
+    }
   if(!empty($_POST))
   {
-    $usrname=$_POST["email"];
+    $email=$_POST["email"];
     $psw=$_POST["password"];
-    $sql="SELECT userid, password, active FROM accounts WHERE accounts.username = '$usrname' ";
+    $sql="SELECT username, userid, password, active FROM accounts WHERE accounts.email = '$email' ";
     $qstat = mysqli_query($connection, $sql);
     if(!$qstat)
     {
@@ -23,7 +27,7 @@
             if($pass["active"]==1)
             {
             session_start();
-            $_SESSION['username'] = $usrname;
+            $_SESSION['username'] = $pass['username'];
             $_SESSION['userid']=$pass['userid'];
             header("location: main.php");
             exit();
@@ -61,6 +65,7 @@ echo "<script>$('#myModal').modal('show')</script>";*/
       background-color: #f9f9f9;
   }
   </style>
+  <title>MnitQuora</title>
 </head>
 <body>
 
@@ -95,8 +100,8 @@ echo "<script>$('#myModal').modal('show')</script>";*/
             <?php } ?>
             
             <div class="form-group">
-              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-              <input type="text" class="form-control" id="usrname" placeholder="Enter email" name="email" required>
+              <label for="email"><span class="glyphicon glyphicon-user"></span> Email</label>
+              <input type="text" class="form-control" id="email" placeholder="Enter email" name="email" required>
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
@@ -130,6 +135,14 @@ echo "<script>$('#myModal').modal('show')</script>";*/
         </div>
         <div class="modal-body" style="padding:40px 50px;">
           <form role="form" action="welcome2.php" method="post" onsubmit="return myfunction()">
+            <?php if (isset($msgsu) && !empty($msgsu)) { ?>
+              <script>
+                $("#myModal2").modal();
+              </script>
+            <div class="alert alert-warning">
+            <?php echo $msgsu ?>
+            </div>
+            <?php } ?>
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
               <input type="text" class="form-control" id="usrname" placeholder="Enter Username" name="username" required>

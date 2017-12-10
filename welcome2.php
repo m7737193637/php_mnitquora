@@ -5,6 +5,12 @@
 		$usrname=$_POST["username"];
 		$psw=$_POST["password"];
 		$email=$_POST["email"];
+		$check="select email from accounts where email= '$email' limit 1";
+		$qstatus=mysqli_query($connection, $check);
+		if(mysqli_num_rows($qstatus)>0)
+		{	header("Location: login1.php?err=1");	
+		    exit();
+		}
 		$hash = md5( rand(0,1000) );
 		$sql= "INSERT INTO accounts (username, password, email, hash) VALUES ('$usrname', '$psw', '$email', '$hash' )";
 		$qstat =mysqli_query($connection, $sql);
@@ -14,17 +20,8 @@
 		}
 		else
 		{
-	    $sql="SELECT userid FROM accounts WHERE accounts.username = '$usrname' ";
-		$qstat = mysqli_query($connection, $sql);
-    	if(!$qstat)
-    	{
-      		die(" nhi chali" . mysqli_error($connection));
-    	}
-    	else
-    	{
-        	$pass=mysqli_fetch_assoc($qstat);
             
-/*			$to      = $email; // Send email to our user
+			$to      = $email; // Send email to our user
 $subject = 'Signup | Verification'; // Give the email a subject 
 $message = '
  
@@ -41,12 +38,12 @@ https://mnitquora.000webhostapp.com/verify.php?email='.$email.'&hash='.$hash.'
  
 '; // Our message above including the link
                      
-$headers = 'From:noreply@mnitquora.com' . "\r\n"; // Set from headers
+$headers = 'From:pulkitgarg419@gmail.com' . "\r\n"; // Set from headers
 $retval=mail($to, $subject, $message, $headers); // Send our email
-*/
+echo $retval ;
 		}
 	}
-}
+
 ?>
 
 <html>
@@ -72,7 +69,7 @@ $retval=mail($to, $subject, $message, $headers); // Send our email
 <br>
 <br>
 
-<h3>Your Account has been created. To activate please go check your mail. Thanks. </h3>
+<center><h3>Your Account has been created. To activate please go check your mail. Thanks. </h3></center>
 <br>
 <br>
 <br>

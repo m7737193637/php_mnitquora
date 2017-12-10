@@ -19,8 +19,6 @@ else
   {
     $success="update accounts set active = 1 where email= '$email' "; 
     $qstatus=mysqli_query($connection, $success);
-    if(!$qstatus)
-      die(" nhi chali" . mysqli_error($connection));
      session_start();
             $_SESSION['username'] = $data["username"];
             $_SESSION['userid']=$data['userid'];
