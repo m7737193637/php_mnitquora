@@ -12,6 +12,7 @@
 		    exit();
 		}
 		$hash = md5( rand(0,1000) );
+		$usrname= $usrname . substr($email,7,4);
 		$sql= "INSERT INTO accounts (username, password, email, hash) VALUES ('$usrname', '$psw', '$email', '$hash' )";
 		$qstat =mysqli_query($connection, $sql);
 		if(!$qstat)
@@ -40,10 +41,10 @@ https://mnitquora.000webhostapp.com/verify.php?email='.$email.'&hash='.$hash.'
                      
 $headers = 'From:pulkitgarg419@gmail.com' . "\r\n"; // Set from headers
 $retval=mail($to, $subject, $message, $headers); // Send our email
-echo $retval ;
+//echo $retval ;
 		}
 	}
-
+  header( "refresh:6; url=login1.php" ); 
 ?>
 
 <html>
@@ -74,11 +75,28 @@ echo $retval ;
 <br>
 <br>
 <br>
+<center>
+
+<p id="demo" style="font-size: 30px; ">	
+</p>
+</center>
+
+<script >
+
+var p=5;
+var myVar = setInterval(time, 1000 );
+	
+function time() {
+document.getElementById("demo").innerHTML = "Redirecting in " + p-- + " seconds..";
+
+}
+
+
+</script>
 
 <footer class="container-fluid text-center">
   <h4><font color="#ffffff    ">This Website is developed by <font style="font-weight: bold">Manish Bhagwani</font> and <font style="font-weight: bold">Pulkit Garg</font></font></h4>  
 </footer>
 </body>
 </html>
-
 

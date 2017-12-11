@@ -53,29 +53,23 @@ echo "<script>$('#myModal').modal('show')</script>";*/
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="mystyle.css">
+
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-  .modal-header, h4, .close {
-      background-color: #d73924;
-      color:white !important;
-      text-align: center;
-      font-size: 30px;
-  }
-  .modal-footer {
-      background-color: #f9f9f9;
-  }
-  </style>
   <title>MnitQuora</title>
 </head>
 <body>
 
-<header class="container-fluid text-center" style="background-color: #d9534f;">
-  <h1><font color="white">Model Log-In page</font></h1>
-<!--   <p>Resize this responsive page to see the effect!</p> 
- --></header>
+<header class="container-fluid text-center" style="background-color: #002147;color: #ffffff">
+  <ul style="list-style: none;" >
+    <li><h1>Mnit Quora</h1></li>
+</li>
+</ul>
+
+</header>
  <center><div style="margin-top: 4%">
-  <button type="button" class="btn btn-warning btn-lg" id="myBtn">Login</button>
-  <button type="button" class="btn btn-warning btn-lg" id="myBtn2">SignUp</button>
+  <button type="button" class="btn btn-primary btn-lg" id="myBtn">Login</button>
+  <button type="button" class="btn btn-primary btn-lg" id="myBtn2">SignUp</button>
 </div>
 </center>
   <!-- Modal -->
@@ -110,12 +104,12 @@ echo "<script>$('#myModal').modal('show')</script>";*/
             <div class="checkbox">
               <label><input type="checkbox" value="" checked>Remember me</label>
             </div>
-              <button type="submit" class="btn btn-danger btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+              <button type="submit" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-          <p>Not a member? <a href="#">Sign Up</a></p>
+          <button type="submit" class="btn btn-primary btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          <p>Not a member? <a href="javascript:signup();"> Sign Up</a></p>
           <p>Forgot <a href="#">Password?</a></p>
         </div>
       </div>
@@ -144,7 +138,7 @@ echo "<script>$('#myModal').modal('show')</script>";*/
             </div>
             <?php } ?>
             <div class="form-group">
-              <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span>Enter your Name</label>
               <input type="text" class="form-control" id="usrname" placeholder="Enter Username" name="username" required>
             </div>
             <div class="form-group">
@@ -163,14 +157,14 @@ echo "<script>$('#myModal').modal('show')</script>";*/
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Confirm Password</label>
               <input type="password" class="form-control" id="psw" placeholder="Enter password" name="password">
             </div> -->
-              <button type="submit" class="btn btn-danger btn-block" ><span class="glyphicon glyphicon-off"></span> SignUp</button>
+              <button type="submit" class="btn btn-primary btn-block" ><span class="glyphicon glyphicon-off"></span> SignUp</button>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-     <!--      <p>Not a member? <a href="#">Sign Up</a></p>
+          <button type="submit" class="btn btn-primary btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+           <p>Already a member? <a href="javascript:login();">Login</a></p>
           <p>Forgot <a href="#">Password?</a></p>
-      -->   </div>
+        </div>
       </div>
       
     </div>
@@ -188,6 +182,16 @@ $(document).ready(function(){
         $("#myModal2").modal();
     });
 });
+function signup()
+{
+  $("#myModal").modal("hide");
+  $("#myModal2").modal();
+}
+function login()
+{
+  $("#myModal2").modal("hide");
+  $("#myModal").modal();
+}
 function myfunction()
 {
  var y=document.getElementById("email2").value;
@@ -223,5 +227,8 @@ function validateEmail(email) {
   
 </script>
 
+<footer class="container-fluid text-center">
+  <h4><font color="#ffffff    ">This Website is developed by <font style="font-weight: bold">Manish Bhagwani</font> and <font style="font-weight: bold">Pulkit Garg</font></font></h4>  
+</footer>
 </body>
 </html>
