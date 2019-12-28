@@ -5,7 +5,7 @@
 		$question=$_POST["qcont"];
 		$qid=$_POST["qid"];
 		if($_POST["editcat"]=="Other")
-    $category=$_POST["othcat"];
+    $category=$_POST["editothcat"];
     else
       $category=$_POST["editcat"];
     $sql= "update questions set qcont= '$question', category= '$category' where qid= '$qid' ";

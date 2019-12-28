@@ -69,7 +69,7 @@ else
 <br>
 
 <footer class="container-fluid text-center">
-  <h4><font color="#ffffff    ">This Website is developed by <font style="font-weight: bold">Manish Bhagwani</font> and <font style="font-weight: bold">Pulkit Garg</font></font></h4>  
+  <h4><font color="#ffffff    ">This Website is being developed by <font style="font-weight: bold">Pulkit Garg</font></font></h4>  
 </footer>
 </body>
 </html>

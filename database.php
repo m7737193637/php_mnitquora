@@ -8,5 +8,4 @@
  	if(mysqli_connect_error()){
  		echo "error" . myysqli_connect_error();
  	}
-
  	?>

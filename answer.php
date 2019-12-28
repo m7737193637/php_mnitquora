@@ -23,7 +23,7 @@
 		}
 		else
 		{
-			header("Location: main.php");
+			header("Location: qview.php?qid=" . $qid);
 			exit();
 		}
 	}

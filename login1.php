@@ -1,5 +1,6 @@
 <?php
   include 'database.php';
+ 
   $msgs=array("", "Wrong Password", "This Email is not registered", "Account not activated yet");
     $err=0;
    $msgsu=""; 
@@ -22,7 +23,7 @@
       if(mysqli_num_rows($qstat)>0)
       {
         $pass=mysqli_fetch_assoc($qstat);
-        if($pass['password']==$psw)
+        if($pass['password']==md5($psw))
           {
             if($pass["active"]==1)
             {
@@ -226,9 +227,9 @@ function validateEmail(email) {
 }
   
 </script>
-
 <footer class="container-fluid text-center">
-  <h4><font color="#ffffff    ">This Website is developed by <font style="font-weight: bold">Manish Bhagwani</font> and <font style="font-weight: bold">Pulkit Garg</font></font></h4>  
+  <h4><font color="#ffffff    ">This Website is being developed by <font style="font-weight: bold">Pulkit Garg</font></font></h4>  
 </footer>
+
 </body>
 </html>

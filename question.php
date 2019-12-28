@@ -4,7 +4,7 @@
   session_start();
   if (!isset($_SESSION['username']) || empty($_SESSION['username'])) 
     header("Location: login1.php");
-     
+    
   if(!empty($_GET))
   {
     $qid=$_GET["qid"];

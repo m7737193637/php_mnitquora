@@ -105,7 +105,11 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
         <li class="<?php if($makeactive=="home") echo "active" ?>"><a href="<?php echo "main.php"  ?>"><span class="glyphicon glyphicon-home"></span>Home</a></li>
         <li class="<?php if($makeactive=="answer") echo "active" ?>"><a href="<?php echo "main.php?unans=true"  ?>"><span class="glyphicon glyphicon-pencil"></span>Answer</a></li>
         <li class="<?php if($makeactive=="ask") echo "active" ?>"><a href="javascript:question();">Ask Question</a></li>
-        <li><a href="https://www.google.com"><span class="glyphicon glyphicon-earphone"></span>Contact Us</a></li>
+        <li class="<?php if($makeactive=="asksurvey") echo "active" ?>"><a href="javascript:survey();">Start Survey</a></li>
+        <li class="<?php if($makeactive=="surveys") echo "active" ?>"><a href="surveys.php">Surveys</a></li>
+
+ <!--        <li><a href="https://www.google.com"><span class="glyphicon glyphicon-earphone"></span>Contact Us</a></li>
+ -->      
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"> <?php echo $_SESSION["username"]; ?></a></li>
@@ -114,8 +118,6 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
     </div>
   </div>
 </nav>
-
-
 
 
 <div class="modal fade" id="ansmodal" role="dialog">
@@ -257,6 +259,101 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
 
 
 
+<div class="modal fade" id="surveymodal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header" >
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-pencil"></span> Start a Survey</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+      
+      
+  <div class= "form-group" >
+      <form role="form" action="survey.php" method="post">
+         <div class="form-group">
+              <label for="scont"><span class="glyphicon glyphicon-pencil"></span> Enter your question </label>
+              <textarea rows=10 class="form-control" id="scont" placeholder="Enter your question" name="scont" required></textarea>
+            </div>
+
+
+            <div class="form-group">
+              <label for="noofopt"><span class="glyphicon glyphicon-eye-open"></span> Number of Options</label>
+              <select class="form-control" name="noofopt" id="noofopt" required onChange="noofoptchange();">
+                <option value="" selected disabled hidden>How many options?</option>
+                    <option value="2">2</option>   
+                    <option value="3">3</option>   
+                    <option value="4">4</option>   
+              </select><br>
+              <div id="option1div" style="display: none;">
+              <label for="option1">Option A</label>
+              <input type="text" class="form-control" name="option1" id="option1" required>
+              <br></div>
+              <div id="option2div" style="display: none;">
+              <label for="option2">Option B</label>
+              <input type="text" class="form-control" name="option2" id="option2" required>
+              <br></div>
+              <div id="option3div" style="display: none;">
+              <label for="option3">Option C</label>
+              <input type="text" class="form-control" name="option3" id="option3" required="true">
+              <br></div>
+              <div id="option4div" style="display: none;">
+              <label for="option4">Option D</label>
+              <input type="text" class="form-control" name="option4" id="option4" required="true">
+              <br></div>
+              <!-- <input type="text" class="form-control" name="option2" id="option2" style="display: none;">
+              <input type="text" class="form-control" name="option3" id="option3" style="display: none;">
+              <input type="text" class="form-control" name="option4" id="option4" style="display: none;"> -->
+            </div>
+
+
+             <div class="form-group">
+              <input type="submit" class="form-control" type="button" id="asksurvey" name="asksurvey" >
+            </div>
+
+            <div class="form-group">
+              <input type="hidden" class="form-control"  name="userid" value=<?php echo $_SESSION["userid"] ?> >
+            </div>
+            
+
+</form>
+</div>
+    </div>
+  </div>
+</div>
+</div> 
+
+
+<div class="modal fade" id="ansmodalqview" role="dialog">
+    <div class="modal-dialog">
+  
+      <div class="modal-content">
+        <div class="modal-header" >
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-pencil"></span> Answer</h4>
+        </div>
+        <div class="modal-body" style="padding:40px 50px;">
+          <form role="form" action="answer.php" method="post">
+            <div class="form-group">
+              
+              <textarea rows="15" class="form-control" id="yourans" placeholder=" Write your answer here" name="yourans" required></textarea>
+          </div>
+              <input type="hidden" name="qid" value=  "<?php echo $qid ?>" >
+              <input type="submit" class="form-control" type="button" id="answer" name="answer" >
+ <div class="form-group">
+              <input type="hidden" class="form-control"  name="userid" value=<?php echo $_SESSION["userid"] ?> >
+            </div>
+           
+
+          </form>
+        </div>
+          </div>
+      </div>
+      
+    </div>
+  </div> 
+ 
 
 <div class="container-fluid "  >    
   <div class="row">
@@ -269,6 +366,8 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
         	<?php if($_SESSION['userid']==$que["userid"]) { ?> 
         	       <h4><a href="javascript:editquestion()" ?>Edit</a></h4>
         	       <?php } ?>
+         <a href="javascript:answeronqview()"><button class=" btn btn-primary" id="answeronqview ">Answer</button></a> 
+
         </div>
         
   </div>
@@ -294,6 +393,7 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
             <button class="btn btn-primary " onclick="vote(<?php echo $ans["aid"] ?>, 2, <?php echo $qid ?>);"><span class="glyphicon glyphicon-thumbs-down"></span>Downvote</button>
           <?php } else { ?>
             <button class="btn btn-primary " onclick="cvote(<?php echo $ans["voteid"] ?>, <?php echo $ans["vstat"] ?>,<?php echo $ans["aid"] ?>, <?php echo $qid ?>  )"> <?php if($ans["vstat"]==1) { ?> Upvoted <?php  } else { ?> Downvoted <?php } } ?></button>
+
         </div>
         
   </div>
@@ -305,11 +405,15 @@ if($qstat3 && mysqli_num_rows($qstat3)>0)
 
 
 <footer class="container-fluid text-center">
-  <h4><font color="#ffffff    ">This Website is developed by <font style="font-weight: bold">Manish Bhagwani</font> and <font style="font-weight: bold">Pulkit Garg</font></font></h4>  
+  <h4><font color="#ffffff    ">This Website is being developed by <font style="font-weight: bold">Pulkit Garg</font></font></h4>  
 </footer>
 <script >  function question()
   {
     $("#quesmodal").modal();
+  }
+  function answeronqview()
+  {
+    $("#ansmodalqview").modal();
   }
   function editquestion()
   {
@@ -324,6 +428,11 @@ $(document).ready(function() {
     $(window).scrollTop(sessionStorage.scrollTop);
   }
 });
+
+  function survey()
+  {
+    $("#surveymodal").modal();
+  }
 </script>
 </body>
 </html>
